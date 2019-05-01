@@ -1,6 +1,5 @@
 
 //Obtiene una lista de usuarios
-//Este método aún no se usa
 function getUsers() {
   $.ajax({
     url: "http://localhost:8080/APIspring/informacion/citizens/",
@@ -16,6 +15,7 @@ function getUsers() {
 //Si no se encuentra retorna un ciudadano con datos nulos
 function getUserByID() {
   if (arguments[0] == null) {
+    console.log("No se ha encontrado usuario");
     getNullUser();
   } else {
     $.ajax({
@@ -23,6 +23,7 @@ function getUserByID() {
       method: "GET",
       success: function(result) {
         if (result.id == null) {
+          console.log("No se ha encontrado usuario");
           getNullUser();
         }else{
           getFullUser(result);
@@ -37,6 +38,7 @@ function getUserByID() {
 //Si no se encuentra retorna una lista vacia
 function getUserByIdentificator() {
   if (arguments[0] == null) {
+      console.log("No se ha encontrado cedula");
     getNullUser();
   } else {
     $.ajax({
@@ -44,6 +46,7 @@ function getUserByIdentificator() {
       method: "GET",
       success: function(result) {
         if (result[0] == null) {
+            console.log("No se ha encontrado cedula");
           getNullUser();
         }else{
           getFullUser(result[0]);
@@ -85,8 +88,7 @@ function getUserInOrder() {
   });
 }
 
-//Crea un evento
-//Este método aún no se usa
+//Crea un evento nel
 function createEvent2() {
   var datos = {
     date: "2019-02-02",
@@ -114,7 +116,6 @@ function createEvent2() {
 }
 
 //Crea un registro login
-//Se usa en la vista Login
 function createLogin() {
   var datos = {
     cedula: $("#cedulalogin").val(),
@@ -128,6 +129,7 @@ function createLogin() {
     data: JSON.stringify(datos),
     success: function(result) {
       if (result.id == null) {
+        console.log("No encontrado");
         responseAtBadLogin();
       } else {
         $("#login").hide(700);

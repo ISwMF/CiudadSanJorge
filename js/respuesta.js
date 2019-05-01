@@ -4,7 +4,7 @@ function responseAtBadLogin() {
   $("#body").append('<div id="resultadologin">');
   $('#body').append('</div>');
   $("#resultadologin").append("<h2>La cedula o contraseña es incorrecta</h2>");
-  $("#resultadologin").append('<button type="submit" class="btn btn-primary btn-block btn-large" onclick="returnLogin()">Let me in.</button>');
+  $("#resultadologin").append('<button type="submit" class="btn btn-primary btn-block btn-large" onclick="returnLogin()">Regresar</button>');
 }
 
 //Retorna al login luego de ingresar credenciales incorrectas en el Login
@@ -177,7 +177,7 @@ function getFullUser() {
   $('#result').show(500);
 }
 
-//Añade funciones al mostrar los reportes de un ciudadano
+//Añade funciones al mostrar los reportes de un ciudadano (BOTON)
 function showCitizen() {
   $('#result').css('float', 'left');
   $('#searching').hide(500);
