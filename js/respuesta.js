@@ -1,3 +1,76 @@
+//////////////////////////
+//Muestra los reportes asociados al ciudadano encontrado anteriormente
+function showEventsByCitizen() {
+  $('#buttonshowcitizen').hide();
+  var eventos = arguments[0];
+  if (eventos.length == 0) {
+    $('#citizenevents').append('<h3 id="citizenwithoutevents"> Este usuario no tiene reportes, ¿será bueno o malo? </h3>');
+    $('#citizenwithoutevents').css('color', '#fff');
+    $('#citizenwithoutevents').css('text-shadow', '0 0 10px rgba(0,0,0,0.3)');
+    $('#citizenwithoutevents').css('letter-spacing', '1px');
+    $('#citizenwithoutevents').css('text-align', 'center');
+
+  } else {
+    for (var i = 0; i < eventos.length; i++) {
+      $('#citizenevents').append(
+        '<table id="event_' + i + '">' +
+        '<tr>' +
+        '<th> ID </th>' +
+        '<th> Situación </th> ' +
+        '<th> Lugar </th>' +
+        '<th> Descripción </th>' +
+        '<th> Puntos </th>' +
+        '<th> Fecha </th>' +
+        '</tr>' +
+        '</table>'
+      );
+      var current = new Date(eventos[i].date);
+      $('#event_' + i).append(
+        '<tr>' +
+        '<td>' + eventos[i].id + '</td>' +
+        '<td>' + eventos[i].situation + '</td>' +
+        '<td>' + eventos[i].place + '</td>' +
+        '<td>' + eventos[i].description + '</td>' +
+        '<td>' + eventos[i].points + '</td>' +
+        '<td>' + current.getDate() + '/' + (current.getMonth() + 1) + '/' + current.getFullYear() + '</td>' +
+        '</tr>'
+      );
+    }
+  }
+}
+
+//////////////////////////
+function showEventsCitizen() {
+  showMessage();
+}
+
+//////////////////////////
+//Muestra un mensaje al no encontrar un ciudadano
+function getNullUser() {
+  $("#result").remove();
+  $("#userlogged").append('<div id="result"></div>');
+  $('#result').append("<h2>No se ha encontrado resultado</h2>");
+}
+
+//////////////////////////
+//Muestra el ciudadano encontrado
+function getFullUser() {
+  var citizen = arguments[0];
+  $("#result").remove();
+  $("#userlogged").append('<div id="result"></div>');
+  $("#result").hide();
+  $('#result').append('<h3><b> ID:</b> ' + citizen.id + '</h3>');
+  $('#result').append('<h3><b> Nombre:</b> ' + citizen.name + '</h3>');
+  $('#result').append('<h3><b> Cedula:</b> ' + citizen.cedula + '</h3>');
+  $('#result').append('<h3><b> Points:</b> ' + citizen.points + '</h3>');
+  $('#result').append('<button type="submit" id="buttonshowcitizen" class="btn btn-primary btn-block" onclick="showCitizen(\'' + citizen.id + '\',\'' + citizen.name + '\',\'' + citizen.cedula + '\',\'' + citizen.points + '\')">Ver reportes de este ciudadano</button>');
+  $('#result').show(500);
+}
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////
 //Muestra un mensaje al ingresar un usuario o contraseña incorrecto
 function responseAtBadLogin() {
   $("#login").hide(700);
@@ -94,11 +167,7 @@ function showHomePage() {
   $('#userlogged').append(
     '<div id="messagewelcome">' +
     '<h2>Bienvenido</h2>' +
-    '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,' +
-    'sed eiusmod tempor incidunt ut labore et dolore magna aliqua. ' +
-    'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. ' +
-    'Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ' +
-    'Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. ' +
+    '. ' +
     '</div>' +
     '<div id="eventsmenu">' +
     '<button type="submit" class="btn btn-primary btn-block btn-large">Últimos reportes que realizaste</button>' +
@@ -156,26 +225,9 @@ function showSearchUserPage() {
   );
 }
 
-//Muestra un mensaje al no encontrar un ciudadano
-function getNullUser() {
-  $("#result").remove();
-  $("#userlogged").append('<div id="result"></div>');
-  $('#result').append("<h2>No se ha encontrado resultado</h2>");
-}
 
-//Muestra el ciudadano encontrado
-function getFullUser() {
-  var citizen = arguments[0];
-  $("#result").remove();
-  $("#userlogged").append('<div id="result"></div>');
-  $("#result").hide();
-  $('#result').append('<h3><b> ID:</b> ' + citizen.id + '</h3>');
-  $('#result').append('<h3><b> Nombre:</b> ' + citizen.name + '</h3>');
-  $('#result').append('<h3><b> Cedula:</b> ' + citizen.cedula + '</h3>');
-  $('#result').append('<h3><b> Points:</b> ' + citizen.points + '</h3>');
-  $('#result').append('<button type="submit" id="buttonshowcitizen" class="btn btn-primary btn-block" onclick="showCitizen(\'' + citizen.id + '\',\'' + citizen.name + '\',\'' + citizen.cedula + '\',\'' + citizen.points + '\')">Ver reportes de este ciudadano</button>');
-  $('#result').show(500);
-}
+
+
 
 //Añade funciones al mostrar los reportes de un ciudadano (BOTON)
 function showCitizen() {
@@ -193,49 +245,8 @@ function showCitizen() {
   );
 }
 
-//Muestra los reportes asociados al ciudadano encontrado anteriormente
-function showEventsByCitizen() {
-  $('#buttonshowcitizen').hide();
-  var eventos = arguments[0];
-  if (eventos.length == 0) {
-    $('#citizenevents').append('<h3 id="citizenwithoutevents"> Este usuario no tiene reportes, ¿será bueno o malo? </h3>');
-    $('#citizenwithoutevents').css('color', '#fff');
-    $('#citizenwithoutevents').css('text-shadow', '0 0 10px rgba(0,0,0,0.3)');
-    $('#citizenwithoutevents').css('letter-spacing', '1px');
-    $('#citizenwithoutevents').css('text-align', 'center');
 
-  } else {
-    for (var i = 0; i < eventos.length; i++) {
-      $('#citizenevents').append(
-        '<table id="event_' + i + '">' +
-        '<tr>' +
-        '<th> ID </th>' +
-        '<th> Situación </th> ' +
-        '<th> Lugar </th>' +
-        '<th> Descripción </th>' +
-        '<th> Puntos </th>' +
-        '<th> Fecha </th>' +
-        '</tr>' +
-        '</table>'
-      );
-      var current = new Date(eventos[i].date);
-      $('#event_' + i).append(
-        '<tr>' +
-        '<td>' + eventos[i].id + '</td>' +
-        '<td>' + eventos[i].situation + '</td>' +
-        '<td>' + eventos[i].place + '</td>' +
-        '<td>' + eventos[i].description + '</td>' +
-        '<td>' + eventos[i].points + '</td>' +
-        '<td>' + current.getDate() + '/' + (current.getMonth() + 1) + '/' + current.getFullYear() + '</td>' +
-        '</tr>'
-      );
-    }
-  }
-}
 
-function showEventsCitizen() {
-  showMessage();
-}
 
 //Mensaje de prueba
 function showMessage() {

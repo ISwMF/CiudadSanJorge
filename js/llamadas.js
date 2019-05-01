@@ -1,18 +1,5 @@
 
-//Obtiene una lista de usuarios
-function getUsers() {
-  $.ajax({
-    url: "http://localhost:8080/APIspring/informacion/citizens/",
-    method: "GET",
-    success: function(result) {
-      console.log(result);
-    }
-  });
-}
-
 //Obtiene un ciudadano por ID
-//Se usa en la busqueda de ciudadanos
-//Si no se encuentra retorna un ciudadano con datos nulos
 function getUserByID() {
   if (arguments[0] == null) {
     console.log("No se ha encontrado usuario");
@@ -32,6 +19,52 @@ function getUserByID() {
     });
   }
 }
+
+/////////////
+//Obtiene los reportes asignados a un ciudadano
+//Se usa como opción cuando se busca un ciudadano
+function getEventsByCitizen() {
+  $.ajax({
+    url: "http://localhost:8080/APIspring/informacion/citizens/"+arguments[0]+"/events",
+    method: "GET",
+    success: function(result) {
+      showEventsByCitizen(result);
+    }
+  });
+}
+
+
+/////////////
+//Crea un registro login
+function createLogin() {
+  var datos = {
+    cedula: $("#cedulalogin").val(),
+    password: $("#contrasenalogin").val()
+  };
+  $.ajax({
+    url: "http://localhost:8080/APIspring/informacion/logins/",
+    method: "post",
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(datos),
+    success: function(result) {
+      if (result.id == null) {
+        console.log("No encontrado");
+        responseAtBadLogin();
+      } else {
+        $("#login").hide(700);
+        responseAtGoodLogin();
+      }
+    }
+  });
+}
+
+
+
+
+
+
+/////////////////////
 
 //Busca y obtiene un usuario usando la cedula
 //Se usa en la busqueda de ciudadanos
@@ -113,41 +146,4 @@ function createEvent2() {
     },
   });
 
-}
-
-//Crea un registro login
-function createLogin() {
-  var datos = {
-    cedula: $("#cedulalogin").val(),
-    password: $("#contrasenalogin").val()
-  };
-  $.ajax({
-    url: "http://localhost:8080/APIspring/informacion/logins/",
-    method: "post",
-    dataType: "json",
-    contentType: "application/json",
-    data: JSON.stringify(datos),
-    success: function(result) {
-      if (result.id == null) {
-        console.log("No encontrado");
-        responseAtBadLogin();
-      } else {
-        $("#login").hide(700);
-        responseAtGoodLogin();
-      }
-    }
-  });
-}
-
-
-//Obtiene los reportes asignados a un ciudadano
-//Se usa como opción cuando se busca un ciudadano
-function getEventsByCitizen() {
-  $.ajax({
-    url: "http://localhost:8080/APIspring/informacion/citizens/"+arguments[0]+"/events",
-    method: "GET",
-    success: function(result) {
-      showEventsByCitizen(result);
-    }
-  });
 }
